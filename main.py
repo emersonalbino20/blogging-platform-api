@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.pos import post_router
+from routes.post import post_router
 import uvicorn
 
 app = FastAPI(title="Blogging Platform API")
