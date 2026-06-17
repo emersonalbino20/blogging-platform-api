@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from database.database_conf import get_db
 from routes.post import post_router
 import uvicorn
 
 app = FastAPI(title="Blogging Platform API")
+
+get_db()
 
 @app.get("/")
 def root() -> dict:
