@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, DateTime, Integer, String, JSON
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime, UTC
+from datetime import datetime, timezone 
 from sqlalchemy.orm import sessionmaker, Session
 
 DATABASE_UR = "sqlite:///database/blog.db"
@@ -18,12 +18,12 @@ class Post(Base):
   tags = Column(JSON, nullable=False)
   createdAt = Column(
                 DateTime(timezone=True),
-                default=lambda: datetime.now(UTC)
+                default=lambda: datetime.now(timezone.utc)
                 )
   updatedAt = Column(
                 DateTime(timezone=True),
-                default=lambda: datetime.now(UTC),
-                onupdate=lambda: datetime.now(UTC)
+                default=lambda: datetime.now(timezone.utc),
+                onupdate=lambda: datetime.now(timezone.utc)
                 )
 
 Base.metadata.create_all(engine)
