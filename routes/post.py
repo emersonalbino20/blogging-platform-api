@@ -1,5 +1,4 @@
 from models.post import AddPost, UpdatePost, PatchPost, PostResponse
-from utils.validate import validate_data
 from typing import List
 from fastapi import APIRouter, HTTPException, Depends, status, Path
 from sqlalchemy import or_
@@ -44,8 +43,6 @@ def update_post(post:UpdatePost, db:Session = Depends(get_db), post_id:int = Pat
   db_post = db.query(Post).filter(Post.id == post_id).first()
   if not db_post:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found!")
-  if validate_data(post) == False:
-    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
   for field, value in post.model_dump().items():
     setattr(db_post, field, value)
   db.commit()
