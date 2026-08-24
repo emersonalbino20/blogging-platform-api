@@ -30,8 +30,6 @@ def get_post(post_id:int = Path(..., le=100, gt=0, description="Post ID to retri
 
 @post_router.post("/", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
 def create_post(post:AddPost, db:Session = Depends(get_db)) -> dict:
-  if validate_data(post) == False:
-    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
   new_post = Post(**post.dict())
   db.add(new_post)
   db.commit()
